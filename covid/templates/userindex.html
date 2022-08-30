@@ -1,0 +1,46 @@
+{% extends 'navbar1.html' %}
+{% block content %}
+
+<!-- Begin Page Content -->
+<div class="container card shadow mt-5">
+		<div class="card-body">
+			<h5 class="p-2" style="border-bottom: 2px solid orange">Statewise Testing Dashboard</h5>
+             <br>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Statewise Test</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                   <table class="table table-bordered" width="100%" cellspacing="0">
+                      <thead>
+                        <tr>
+                            <th>Sno.</th>
+                            <th>State Name</th>
+                            <th>Total Test Done</th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                      {% for i in patient %}
+                         <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{i.State}}</td>
+                            <td>{{i.statecount}}</td>
+                         </tr>
+                        {% endfor %}
+                      </tbody>
+                   </table>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /.container-fluid -->
+</div>
+<!-- End of Main Content -->
+
+{% endblock content %}

@@ -1,0 +1,104 @@
+{% extends 'navbar1.html' %}
+{% block content %}
+
+<!-- Begin Page Content -->
+<div class="container card shadow mt-5">
+    <div class="card-body">
+        <h5 class="p-2" style="border-bottom: 2px solid orange">Covid-19 Testing</h5>
+        <br>
+        <div class="container-fluid">
+            <form name="newtesting" method="post">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Personal Information</h6>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" class="form-control" name="FullName"
+                                   placeholder="Enter Full Name" pattern="[A-Za-z ]+" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Mobile Number</label>
+                            <input type="text" class="form-control" name="MobileNumber"
+                                   placeholder="Enter Mobile Number" pattern="[0-9]{10}"
+                                   required onBlur="mobileAvailability()">
+                            <span id="mobile-availability-status" style="font-size:12px;"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label>DOB</label>
+                            <input type="date" class="form-control" name="DateOfBirth" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Any Govt Issued ID</label>
+                            <input type="text" class="form-control" name="GovtIssuedId"
+                                   placeholder="Pancard / Driving License / Voter id / any other" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Govt Issued ID Number</label>
+                            <input type="text" class="form-control" name="GovtIssuedIdNo"
+                                   placeholder="Enter Government Issued ID Number" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Address</label>
+                            <textarea class="form-control" name="FullAddress" required
+                                      placeholder="Enter Address"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>State</label>
+                            <input type="text" class="form-control" name="State" placeholder="Enter State" required>
+                        </div>
+
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Testing Information</h6>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Test Type</label>
+                            <select class="form-control" name="TestType" required>
+                                <option value="">Select</option>
+                                <option value="Antigen">Antigen</option>
+                                <option value="RT-PCR">RT-PCR</option>
+                                <option value="CB-NAAT">CB-NAAT</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Time Slot for Test</label>
+                            <input type="datetime-local" class="form-control" name="TestTimeSlot" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-primary" value="Submit">
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>  <!-- /.container-fluid -->
+
+    </div>
+</div>
+
+{% if error == "no" %}
+<script>
+    alert('Your date has been added. Order Number is {{orderno}}');
+    window.location=('{% url 'newUserTesting' %}');
+</script>
+{% endif %}
+{% if error == "yes" %}
+<script>
+    alert('Something Went Wrong. Please try again');
+</script>
+{% endif %}
+
+{% endblock content %}

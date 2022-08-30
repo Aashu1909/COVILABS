@@ -1,0 +1,35 @@
+{% extends 'admin_base.html' %}
+{% block main  %}
+
+<div class="card shadow mt-5">
+    <div class="card-body">
+        <h5 class="p-2" style="border-bottom: 2px solid orange;">Read Queries </h5>
+        <div class="container-fluid mt-5">
+            <table class="table table-bordered table-sm" id="example">
+                <thead>
+                <tr>
+                    <th>S.No</th>
+                    <th>Name</th>
+                    <th>Email ID</th>
+                    <th>Contact Number</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                {% for i in contact %}
+                <tbody>
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{i.name}}</td>
+                    <td>{{i.emailid}}</td>
+                    <td>{{i.contact}}</td>
+                    <td><a href="{% url 'view_queries' i.id %}" class="text-primary">View Details</a> |
+                        <a href="{% url 'delete_contact' i.id %}" class="text-danger"
+                           onclick="return confirm('Are you sure to delete this Queries ?')">Delete</a></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

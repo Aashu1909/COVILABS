@@ -1,0 +1,38 @@
+{% extends 'admin_base.html' %}
+{% block main  %}
+
+<div class="card shadow mt-5">
+    <div class="card-body">
+        <h5 class="p-2" style="border-bottom: 2px solid orange;">Manage Phlebotomist Details</h5>
+        <div class="container-fluid mt-5">
+            <table class="table table-bordered table-sm" id="example">
+                <thead>
+                <tr>
+                    <th>S No.</th>
+                    <th>Employee ID</th>
+                    <th>Full Name</th>
+                    <th>Mobile Number</th>
+                    <th>Reg.Date</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                  {% for i in phlebotomist%}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{i.EmpID}}</td>
+                    <td>{{i.FullName}}</td>
+                    <td>{{i.MobileNumber}}</td>
+                    <td>{{i.RegDate}}</td>
+                    <td><a href="{% url 'edit_Phlebotomist' i.id %}" class="text-primary">Edit</a> |
+                        <a href="{% url 'delete_Phlebotomist' i.id %}" class="text-danger" onclick="return confirm('Are You Sure?')">Delete</a>
+                    </td>
+                </tr>
+                  {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

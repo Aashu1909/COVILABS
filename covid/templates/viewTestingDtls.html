@@ -1,0 +1,313 @@
+{% extends 'admin_base.html' %}
+{% block main  %}
+
+<div class="card shadow mt-5">
+    <div class="card-body">
+        <h5 class="p-2" style="border-bottom: 2px solid orange;">View Testing Report Details</h5>
+
+        <div class="container-fluid">
+
+            <!-- Page Heading -->
+            <h1 class="h3 mb-4 text-gray-800">Test Details : {{test.OrderNumber}}</h1>
+            <div class="row">
+
+                <!-- personal information --->
+                <div class="col-lg-12">
+
+                    <!-- Basic Card Example -->
+                    <div class="card shadow">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Personal Information</h6>
+                        </div>
+                        <div class="card-body">
+
+                            <table class="table table-bordered" width="100%" cellspacing="0">
+                                <tr>
+                                    <th>Full Name</th>
+                                    <td>{{test.patient.FullName}}</td>
+
+                                    <th>Mobile Number</th>
+                                    <td>{{test.patient.MobileNumber}}</td>
+                                </tr>
+
+                                <tr>
+                                    <th>Govt Issued Id</th>
+                                    <td>{{test.patient.GovtIssuedId}}</td>
+
+                                    <th>Govt Issued Id No</th>
+                                    <td>{{test.patient.GovtIssuedIdNo}}</td>
+                                </tr>
+
+                                <tr>
+                                    <th>Full Address</th>
+                                    <td>{{test.patient.FullAddress}}</td>
+
+                                    <th>State</th>
+                                    <td>{{test.patient.State}}</td>
+                                </tr>
+
+                                <tr>
+                                    <th>DOB (Date of Birth)</th>
+                                    <td>{{test.patient.DateOfBirth}}</td>
+
+                                    <th>Profile Reg Date</th>
+                                    <td>{{test.patient.RegistrationDate}}</td>
+                                </tr>
+                            </table>
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Test Information --->
+                <div class="col-lg-12">
+
+                    <!-- Basic Card Example -->
+                    <div class="card shadow">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Test Information</h6>
+                        </div>
+                        <div class="card-body">
+
+                            <table class="table table-bordered" width="100%" cellspacing="0">
+                                <tr>
+                                    <th>Order Number</th>
+                                    <td>{{test.OrderNumber}}</td>
+
+                                    <th>Test Type</th>
+                                    <td>{{test.TestType}}</td>
+                                </tr>
+
+                                <tr>
+                                    <th>Time Slot</th>
+                                    <td>{{test.TestTimeSlot}}</td>
+
+                                    {% if test.ReportStatus == 'Not Processed yet' %}
+
+                                    <th>Report Status</th>
+                                    <td>Not Processed yet</td>
+
+                                    {% else %}
+                                    <th>Report Status</th>
+                                    <td>{{test.ReportStatus}}</td>
+                                    {% endif %}
+                                </tr>
+
+                                {% if test.phlebotomist.EmpID %}
+                                <tr>
+                                    <th>Assign To</th>
+                                    <td>{{test.phlebotomist.FullName}} ({{test.phlebotomist.EmpID}})</td>
+
+                                    <th>Assigned Date</th>
+                                    <td>{{test.AssignedTime}}</td>
+                                </tr>
+                                {% endif %}
+
+                                {% if test.ReportStatus == "Delivered" %}
+                                <tr>
+                                    <th>Report</th>
+                                    <td><a href="{{test.FinalReport.url}}" target="_blank" download>Download</a></td>
+
+                                    <th>Report Delivered Time</th>
+                                    <td>{{test.ReportUploadTime}}</td>
+                                </tr>
+                                {% endif %}
+                            </table>
+
+                            {% if not test.phlebotomist.EmpID %}
+                            <div class="form-group">
+                                <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal"
+                                        data-target="#assignto">Assign To
+                                </button>
+                            </div>
+                            {% else %}
+                                {% if test.ReportStatus == 'Assigned' or test.ReportStatus == 'On the Way for Collection' or test.ReportStatus == 'Sample Collected' or test.ReportStatus == 'Sent to Lab' %}
+                            <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#takeaction">Take Action</button>
+                                    {% endif %}
+                                {% endif %}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+</form>
+            <!-- Test Tracking History --->
+            <div class="row">
+                <div class="col-lg-12">
+
+                    <!-- Basic Card Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary" align="center">Test Tracking History</h6>
+                        </div>
+                        <div class="card-body">
+
+                            {% if reportcount != 0 %}
+                            <table class="table table-bordered" width="100%" cellspacing="0">
+                                <tr>
+                                    <th>Remark</th>
+                                    <th>Status</th>
+                                    <th>Remark Date</th>
+
+                                </tr>
+
+                                   {% for i in report1 %}
+                                <tr>
+
+                                    <td>{{i.Remark}}</td>
+                                    <td>{{i.Status}}</td>
+                                    <td>{{i.PostingTime}}</td>
+
+                                </tr>
+                                 {% endfor %}
+
+                            </table>
+                        {% endif %}
+                            {% if reportcount == 0 %}
+                            <h4 align="center" style="color:red"> No Tracking history found </h4>
+                            {% endif %}
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+        </div>
+        <!-- /.container-fluid -->
+
+        <!-- Assign Modal -->
+        <div id="assignto" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 align="left" class="text-success">Assign to</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+
+                        <form method="post">
+                            {% csrf_token %}
+                            <p><select class="form-control" name="assignto" required="true">
+                                <option value="">Select Phlebotomist</option>
+                                {% for i in phlebomist %}
+                                <option value="{{i.id}}">{{i.FullName}} [{{i.EmpID}}]</option>
+                                {% endfor %}
+                            </select></p>
+                            <p>
+                                <input type="submit" class="btn btn-primary btn-user btn-block" value="Submit"></p>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            {% if error == "no" %}
+            <script>
+              alert('Assigned to Phlebotomist successfully');
+              window.location=('{% url 'viewTestingDtls' test.id %}');
+            </script>
+            {% endif %}
+            {% if error == "yes" %}
+            <script>
+              alert('Something Went Wrong. Please try again');
+            </script>
+            {% endif %}
+</div>
+            <!-- Take Action Modal -->
+
+
+         <div id="takeaction" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 align="left" class="text-success">Take Action</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <p><select class="form-control" name="ReportStatus" id="status" required="true">
+                                    <option value="">Select Action</option>
+
+                                    {% if test.ReportStatus == 'Assigned'%}
+
+                                    <option value="On the Way for Collection">On the Way for Collection</option>
+                                    <option value="Sample Collected">Sample Collected</option>
+                                    <option value="Sent to Lab">Sent to Lab</option>
+                                    <option value="Delivered">Delivered</option>
+                                    {% elif test.ReportStatus == 'On the Way for Collection' %}
+                                    <option value="Sample Collected">Sample Collected</option>
+                                    <option value="Sent to Lab">Sent to Lab</option>
+                                    <option value="Delivered">Delivered</option>
+                                    {% elif test.ReportStatus == 'Sample Collected' %}
+                                    <option value="Sent to Lab">Sent to Lab</option>
+                                    <option value="Delivered">Delivered</option>
+                                    {% elif test.ReportStatus == 'Sent to Lab' %}
+                                    <option value="Delivered">Delivered</option>
+                                    {% endif %}
+
+                                </select></p>
+
+
+                                <p id='reportfile'> Report
+                                    <input type="file" name="report" id="report"></p>
+                                <p>
+
+
+
+                                <textarea name="remark" class="form-control" required="true"
+                                          placeholder="Remark (Max 500 Characters)" maxlength="500" rows="5"></textarea>
+                                </p>
+                                <p>
+                                    <input type="submit" class="btn btn-primary btn-user btn-block" name="takeaction"
+                                           id="submit"></p>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+<script type="text/javascript">
+
+  //For report file
+  $('#reportfile').hide();
+  $(document).ready(function(){
+  $('#status').change(function(){
+  if($('#status').val()=='Delivered')
+  {
+  $('#reportfile').show();
+  jQuery("#report").prop('required',true);
+  }
+  else{
+  $('#reportfile').hide();
+  }
+})})
+</script>
+
+        {% if error1 == "no" %}
+            <script>
+              alert('Status updated successfully');
+            </script>
+            {% endif %}
+            {% if error1 == "yes" %}
+            <script>
+              alert('Something Went Wrong. Please try again');
+            </script>
+            {% endif %}
+
+    </div>
+</div>
+        {% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'navbar1.html' %}
+{% block content %}
+{% load static %}
+
+<!-- Begin Page Content -->
+<link rel="stylesheet" href="{% static 'css/style1.css' %}">
+<div class="container card shadow">
+    <div class="card-body">
+        <h5 class="p-2" style="border-bottom: 2px solid orange">Covid-19 Testing</h5>
+        <br>
+    <center><div class="wrapper">
+         <div class="title">
+            Admin Login
+         </div>
+         <form method="post">
+            {% csrf_token %}
+            <div class="field">
+               <input type="text" name="uname" required>
+               <label>Username</label>
+            </div>
+            <div class="field">
+               <input type="password" name="pwd" required>
+               <label>Password</label>
+            </div>
+            <div class="field">
+               <input type="submit" value="Login">
+            </div>
+            <div class="field">
+               <center><a href="{% url 'index' %}">Back to Home</a></center>
+            </div>
+         </form>
+      </div></center>
+    </div>
+</div>
+
+{% if error == "no" %}
+<script>
+    alert('Logged In Successfully');
+    window.location=('{% url 'admin_home' %}');
+</script>
+{% endif %}
+
+{% if error == "yes" %}
+<script>
+    alert('Invalid Credentials, Please try again');
+</script>
+{% endif %}
+
+{% endblock content %}

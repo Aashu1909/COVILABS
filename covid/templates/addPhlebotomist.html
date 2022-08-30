@@ -1,0 +1,53 @@
+{% extends 'admin_base.html' %}
+{% block main  %}
+
+<div class="card shadow mt-5">
+    <div class="card-body">
+        <h5 class="p-2" style="border-bottom: 2px solid orange;">Add Phlebotomist </h5>
+        <div class="container-fluid">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Employee ID</label>
+                            <input type="text" name="EmpID" class="form-control" placeholder="Enter Employee ID" required>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" name="FullName" class="form-control" placeholder="Enter Full Name" required>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Contact Number</label>
+                            <input type="text" name="MobileNumber" class="form-control" placeholder="Enter Contact Number" required>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <input type="submit" value="Submit" class="m-2 px-3 btn btn-primary">
+            </form>
+        </div>
+    </div>
+</div>
+
+{% if error ==  "no" %}
+<script>
+    alert('Phlebotomist has been Added');
+    window.location=('{% url 'managePhlebotomist' %}');
+
+</script>
+{% endif %}
+{% if error == "yes" %}
+<script>
+    alert('Something Went Wrong. Please try again');
+</script>
+{% endif %}
+
+
+{% endblock %}

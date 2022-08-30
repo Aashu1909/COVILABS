@@ -1,0 +1,43 @@
+{% extends 'admin_base.html' %}
+{% block main  %}
+
+<div class="card shadow mt-5">
+    <div class="card-body">
+        <h5 class="p-2" style="border-bottom: 2px solid orange;">View Queries Details</h5>
+        <div class="container-fluid mt-5">
+            <table class="table table-bordered">
+                <tr align="center">
+                    <td colspan="4" style="font-size : 20px; color : red"> View Queries Details</td>
+                </tr>
+
+                <tr>
+                    <th>Name</th>
+                    <td>{{contact.name}}</td>
+
+                    <th>Contact No.</th>
+                    <td>{{contact.contact}}</td>
+                </tr>
+
+                <tr>
+                    <th>Email ID</th>
+                    <td>{{contact.emailid}}</td>
+
+                    <th>Symptoms</th>
+                    <td>{{contact.symptoms}}</td>
+                </tr>
+
+                <tr>
+                    <th>Enquiry Message</th>
+                    <td colspan="3">{{contact.message}}</td>
+                </tr>
+
+                <tr>
+                    <th>Enquiry Date</th>
+                    <td colspan="3">{{contact.msgdate}}</td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

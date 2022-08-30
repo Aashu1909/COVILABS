@@ -1,0 +1,45 @@
+{% extends 'admin_base.html' %}
+{% block main  %}
+
+<div class="card shadow mt-5">
+    <div class="card-body">
+        <h5 class="p-2" style="border-bottom: 2px solid orange;">Between Dates Reports</h5>
+        <div class="container-fluid mt-5">
+            <h5 align="center" style="color:blue">Report from <span style="color:red">{{fd}}</span> to <span style="color:red">{{td}}</span></h5>
+            <table id="example" class="table table-striped table-bordered" style="width:100%">
+                <thead>
+                <tr>
+                      <th>S No.</th>
+                    <th>Order No.</th>
+                    <th>Patient Name</th>
+                    <th>Mobile Number</th>
+                    <th>Test Type</th>
+                    <th>Time Slot</th>
+                    <th>Reg.Date</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                 {% for i in test %}
+                            <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{i.OrderNumber}}</td>
+                    <td>{{i.patient.FullName}}</td>
+                    <td>{{i.patient.MobileNumber}}</td>
+                    <td>{{i.TestType}}</td>
+                    <td>{{i.TestTimeSlot}}</td>
+                    <td>{{i.RegistrationDate}}</td>
+                    <td><a href="{% url 'viewTestingDtls' i.id %}" class="text-primary">View</a></td>
+                </tr>
+                            {% empty %}
+                <tr>
+                    <td colspan="8"> No record found against this search</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

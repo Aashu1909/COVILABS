@@ -1,0 +1,190 @@
+{% extends 'navbar1.html' %}
+{% block content %}
+
+<div class="card shadow mt-5">
+    <div class="card-body">
+        <h5 class="p-2" style="border-bottom: 2px solid orange;">View Patient Report Details</h5>
+
+        <div class="container-fluid">
+
+            <!-- Page Heading -->
+            <h1 class="h3 mb-4 text-gray-800">Test Details : {{test.OrderNumber}}</h1>
+            <div class="row">
+
+                <!-- personal information --->
+                <div class="col-lg-12">
+
+                    <!-- Basic Card Example -->
+                    <div class="card shadow">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Personal Information</h6>
+                        </div>
+                        <div class="card-body">
+
+                            <table class="table table-bordered" width="100%" cellspacing="0">
+                                <tr>
+                                    <th>Full Name</th>
+                                    <td>{{test.patient.FullName}}</td>
+
+                                    <th>Mobile Number</th>
+                                    <td>{{test.patient.MobileNumber}}</td>
+                                </tr>
+
+                                <tr>
+                                    <th>Govt Issued Id</th>
+                                    <td>{{test.patient.GovtIssuedId}}</td>
+
+                                    <th>Govt Issued Id No</th>
+                                    <td>{{test.patient.GovtIssuedIdNo}}</td>
+                                </tr>
+
+                                <tr>
+                                    <th>Full Address</th>
+                                    <td>{{test.patient.FullAddress}}</td>
+
+                                    <th>State</th>
+                                    <td>{{test.patient.State}}</td>
+                                </tr>
+
+                                <tr>
+                                    <th>DOB (Date of Birth)</th>
+                                    <td>{{test.patient.DateOfBirth}}</td>
+
+                                    <th>Profile Reg Date</th>
+                                    <td>{{test.patient.RegistrationDate}}</td>
+                                </tr>
+                            </table>
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Test Information --->
+                <div class="col-lg-12">
+
+                    <!-- Basic Card Example -->
+                    <div class="card shadow">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Test Information</h6>
+                        </div>
+                        <div class="card-body">
+
+                            <table class="table table-bordered" width="100%" cellspacing="0">
+                                <tr>
+                                    <th>Order Number</th>
+                                    <td>{{test.OrderNumber}}</td>
+
+                                    <th>Test Type</th>
+                                    <td>{{test.TestType}}</td>
+                                </tr>
+
+                                <tr>
+                                    <th>Time Slot</th>
+                                    <td>{{test.TestTimeSlot}}</td>
+
+                                    {% if not test.ReportStatus %}
+
+                                   <th>Report Status</th>
+                                   <td>Not Processed yet</td>
+
+                                    {% else %}
+                                   <th>Report Status</th>
+                                   <td>{{test.ReportStatus}}</td>
+                                   {% endif %}
+                                </tr>
+
+                                {% if test.phlebotomist.EmpID %}
+                                <tr>
+                                    <th>Assign To</th>
+                                    <td>{{test.phlebotomist.FullName}} ({{test.phlebotomist.EmpID}})</td>
+
+                                    <th>Assigned Date</th>
+                                    <td>{{test.AssignedTime}}</td>
+                                </tr>
+                                {% endif %}
+
+                                {% if test.ReportStatus == "Delivered" %}
+                                <tr>
+                                    <th>Report</th>
+                                    <td><a href="{{test.FinalReport.url}}" target="_blank" download>Download</a></td>
+
+                                    <th>Report Delivered Time</th>
+                                    <td>{{test.ReportUploadTime}}</td>
+                                </tr>
+                                {% endif %}
+
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Test Tracking History --->
+            <div class="row">
+                <div class="col-lg-12">
+
+                    <!-- Basic Card Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary" align="center">Test Tracking History</h6>
+                        </div>
+                        <div class="card-body">
+
+                             {% if reportcount != 0 %}
+                            <table class="table table-bordered" width="100%" cellspacing="0">
+                                <tr>
+                                    <th>Remark</th>
+                                    <th>Status</th>
+                                    <th>Remark Date</th>
+
+                                </tr>
+
+                                   {% for i in report1 %}
+                                <tr>
+
+                                    <td>{{i.Remark}}</td>
+                                    <td>{{i.Status}}</td>
+                                    <td>{{i.PostingTime}}</td>
+
+                                </tr>
+                                 {% endfor %}
+
+                            </table>
+                        {% endif %}
+                            {% if reportcount == 0 %}
+                            <h4 align="center" style="color:red"> No Tracking history found </h4>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            </form>
+
+        </div>
+        <!-- /.container-fluid -->
+
+    </div>
+</div>
+
+<script type="text/javascript">
+
+  //For report file
+  $('#reportfile').hide();
+  $(document).ready(function(){
+  $('#status').change(function(){
+  if($('#status').val()=='Delivered')
+  {
+  $('#reportfile').show();
+  jQuery("#report").prop('required',true);
+  }
+  else{
+  $('#reportfile').hide();
+  }
+})})
+</script>
+
+{% endblock %}

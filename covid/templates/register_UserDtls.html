@@ -1,0 +1,106 @@
+{% extends 'navbar1.html' %}
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="table-responsive table--no-card m-b-30">
+
+                <h4 align="center">Result against "{{sd}}" keyword </h4>
+                <hr/>
+
+               <div class="container">
+                <form name="newtesting" method="post">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Personal Information</h6>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" class="form-control" name="FullName"
+                                   value="{{booking.FullName}}" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Mobile Number</label>
+                            <input type="text" class="form-control" name="MobileNumber"
+                                   value="{{booking.MobileNumber}}" readonly>
+                            <span id="mobile-availability-status" style="font-size:12px;"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label>DOB</label>
+                            <input type="text" class="form-control" name="DateOfBirth" value="{{booking.DateOfBirth}}" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Any Govt Issued ID</label>
+                            <input type="text" class="form-control" name="GovtIssuedId"
+                                   value="{{booking.GovtIssuedId}}" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Govt Issued ID Number</label>
+                            <input type="text" class="form-control" name="GovtIssuedIdNo"
+                                   value="{{booking.GovtIssuedIdNo}}" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Address</label>
+                            <textarea class="form-control" name="FullAddress" readonly>{{booking.FullAddress}}</textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>State</label>
+                            <input type="text" class="form-control" name="State" value="{{booking.State}}" readonly>
+                        </div>
+
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Testing Information</h6>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Test Type</label>
+                            <select class="form-control" name="TestType" required>
+                                <option value="">Select</option>
+                                <option value="Antigen">Antigen</option>
+                                <option value="RT-PCR">RT-PCR</option>
+                                <option value="CB-NAAT">CB-NAAT</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Time Slot for Test</label>
+                            <input type="datetime-local" class="form-control" name="TestTimeSlot" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-primary" value="Submit">
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+
+{% if error == "no" %}
+<script>
+    alert('Your test request submitted successfully. Order Number is {{orderno}}');
+    window.location=('{% url 'patientReport' %}');
+</script>
+{% endif %}
+{% if error == "yes" %}
+<script>
+    alert('Something Went Wrong. Please try again');
+</script>
+{% endif %}
+
+{% endblock content %}

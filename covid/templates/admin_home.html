@@ -1,0 +1,100 @@
+{% extends 'admin_base.html' %}
+{% block main  %}
+
+<div class="row mt-5">
+    <div class="col-sm-3 p-2">
+        <div class="card shadow">
+            <div class="card-body">
+            <h4 class="text-success">Total Test</h4>
+            <h5>{{totaltest}}</h5>
+        </div>
+        <div class="card-footer">
+            <a href="#">View Details >></a>
+        </div>
+        </div>
+    </div>
+    <div class="col-sm-3 p-2">
+        <div class="card shadow">
+            <div class="card-body">
+                <h4 class="text-success">Total Assigned</h4>
+                <h5>{{totalassigned}}</h5>
+            </div>
+            <div class="card-footer">
+                <a href="#">View Details >></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3 p-2">
+        <div class="card shadow">
+            <div class="card-body">
+            <h4 class="text-success">On the way for sample collatiion</h4>
+            <h5>0</h5>
+            </div>
+            <div class="card-footer">
+                <a href="{{totalway}}">View Details >></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3 p-2">
+        <div class="card shadow">
+            <div class="card-body">
+            <h4 class="text-success">Sample Collected</h4>
+            <h5>{{totalcollected}}</h5>
+            </div>
+            <div class="card-footer">
+                <a href="#">View Details >></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-3 p-2">
+        <div class="card shadow">
+            <div class="card-body">
+            <h4 class="text-success">Sample Send to Lab</h4>
+            <h5>{{totallab}}</h5>
+            </div>
+            <div class="card-footer">
+                <a href="#">View Details >></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-3 p-2">
+        <div class="card shadow">
+            <div class="card-body">
+            <h4 class="text-success">Report Delivered</h4>
+            <h5>{{totaldelivered}}</h5>
+            </div>
+            <div class="card-footer">
+                <a href="#">View Details >></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-3 p-2">
+        <div class="card shadow">
+            <div class="card-body">
+            <h4 class="text-success">Total Patient</h4>
+            <h5>{{totalpatient}}</h5>
+            </div>
+            <div class="card-footer">
+                <a href="#">View Details >></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-3 p-2">
+        <div class="card shadow">
+            <div class="card-body">
+            <h4 class="text-success">Total Phlebotomist</h4>
+            <h5>{{totalphlebotomist}}</h5>
+            </div>
+            <div class="card-footer">
+                <a href="#">View Details >></a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'admin_base.html' %}
+{% block main  %}
+
+<div class="card shadow mt-5">
+    <div class="card-body">
+        <h5 class="p-2" style="border-bottom: 2px solid orange;">New Test Details</h5>
+        <div class="container-fluid mt-5">
+            <table class="table table-bordered table-sm" id="example">
+                <thead>
+                <tr>
+                    <th>S No.</th>
+                    <th>Order No.</th>
+                    <th>Patient Name</th>
+                    <th>Mobile Number</th>
+                    <th>Test Type</th>
+                    <th>Time Slot</th>
+                    <th>Reg.Date</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                  {% for i in test %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{i.OrderNumber}}</td>
+                    <td>{{i.patient.FullName}}</td>
+                    <td>{{i.patient.MobileNumber}}</td>
+                    <td>{{i.TestType}}</td>
+                    <td>{{i.TestTimeSlot}}</td>
+                    <td>{{i.RegistrationDate}}</td>
+                    <td><a href="{% url 'viewTestingDtls' i.id %}" class="text-primary">View</a></td>
+                </tr>
+                  {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

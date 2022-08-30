@@ -1,0 +1,58 @@
+{% extends 'navbar1.html' %}
+{% block content %}
+
+<div class="container card shadow mt-5">
+    <div class="card-body">
+        <h5 class="p-2" style="border-bottom: 2px solid orange">Covid-19 Testing- Register User</h5>
+        <br>
+
+        <div class="container mt-5">
+		<h1 class="text-center "></h1>
+		  <div class="card">
+				<div class="card-body">
+					  <form method="post">
+						  {% csrf_token %}
+						<div class="form-group">
+							<label><b>Enter Register Name/Mobile Number</b></label>
+							<input type="text" name="searchdata" class="form-control" placeholder="Enter Register Name/Mobile Number" required>
+						</div><br>
+						<div class="form-group">
+					      <input type="submit" value="Submit" class="btn btn-primary btn-lg btn-block">
+					    </div>
+					  </form>
+				          <h4 align="center">Result Against "{{sd}}" Keyword</h4>
+                        </div>
+                   <table class="table table-bordered table-striped table-vcenter js-dataTable-full-pagination">
+                    <thead>
+				     <tr>
+					   <th>S.No</th>
+					   <th>Full Name</th>
+					   <th>Contact Number</th>
+					   <th>Address</th>
+					    <th>Action</th>
+				     </tr>
+			       </thead>
+
+			       <tbody>
+                      {% for i in booking %}
+			          <tr>
+                         <td>{{forloop.counter}}</td>
+                          <td>{{i.FullName}}</td>
+                          <td>{{i.MobileNumber}}</td>
+                          <td>{{i.FullAddress}}</td>
+                          <td><a href="{% url 'register_UserDtls' i.id %}" class="btn btn-primary">View Details</a></td>
+                      </tr>
+                      {% empty %}
+
+                          <p>No Record Found Against This Search.</p>
+
+                      {% endfor %}
+                   </tbody>
+		        </table>
+			</div>
+		</div>
+	</div>
+
+    </div>
+</div>
+{% endblock content %}
